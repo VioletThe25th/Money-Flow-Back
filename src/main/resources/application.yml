@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: Money-Flow-Back
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 427636738144-nafrepaeo27tfg00oidmghro7m56bc5d.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+          github:
+            client-id: Ov23lixuh4ErJnY0TUJW
+            client-secret: bb03911d6cf75d1d15a3ffb7e08d7b1722c25263
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+
+logging.level.org.springframework.security: TRACE
