@@ -28,19 +28,18 @@ public class ModelUser implements Serializable {
     @Column(name = "email_confirme", insertable = true, updatable = true, nullable = true)
     private Boolean email_confirme;
 
-    @Column(name = "role", insertable = true, updatable = true, nullable = false)
-    private BigInteger role;
+    @ManyToOne
+    @JoinColumn(name = "role_id", insertable = true, updatable = true, nullable = false)
+    private ModelRole role;
 
-    public User(){
-        super();
-    }
+    public ModelUser(){}
 
-    public User(String nom, String prenom, String email, String password){
+    public ModelUser(String nom, String prenom, String email, String password, ModelRole role){
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
-        email_confirme = false;
-        role = BigInteger.valueOf(2); //2 ici est le role user de base
+        this.email_confirme = false;
+        this.role = role;
     }
 }
