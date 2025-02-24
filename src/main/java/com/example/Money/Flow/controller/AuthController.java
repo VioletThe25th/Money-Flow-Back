@@ -1,12 +1,14 @@
 package com.example.Money.Flow.controller;
 
+import com.example.Money.Flow.Model.ModelUser;
 import com.example.Money.Flow.payload.JwtResponse;
 import com.example.Money.Flow.payload.LoginRequest;
+import com.example.Money.Flow.payload.SignupRequest;
 import com.example.Money.Flow.security.JwtUtils;
+import com.example.Money.Flow.service.ModelUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +23,30 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    @Autowired
+    private ModelUserService userService;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        // Authentifier l'utilisateur
+        // Authentification en utilisant l'email comme identifiant
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
         );
 
-        // Placer l'authentification dans le contexte de sécurité
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        // Générer le token JWT
         String jwt = jwtUtils.generateJwtToken(authentication);
-
-        // Retourner le token dans la réponse
         return ResponseEntity.ok(new JwtResponse(jwt));
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+        ModelUser user = new ModelUser();
+        user.setNom(signupRequest.getNom());
+        user.setPrenom(signupRequest.getPrenom());
+        user.setEmail(signupRequest.getEmail());
+        user.setPassword(signupRequest.getPassword());
+        // Vous pouvez gérer ici le choix du rôle (par exemple, récupérer un ModelRole par défaut)
+        userService.registerUser(user);
+        return ResponseEntity.ok("Utilisateur enregistré avec succès");
     }
 }
