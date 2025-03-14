@@ -46,7 +46,7 @@ public class AuthController {
         user.setEmail(signupRequest.getEmail());
         user.setPassword(signupRequest.getPassword());
         // Vous pouvez gérer ici le choix du rôle (par exemple, récupérer un ModelRole par défaut)
-        userService.registerUser(user);
+        userService.createUser(user);
         return ResponseEntity.ok("Utilisateur enregistré avec succès");
     }
 }
