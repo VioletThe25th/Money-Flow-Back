@@ -33,12 +33,12 @@ public class ModelTransaction implements Serializable {
     @Valid
     @ManyToOne
     @JoinColumn(name = "compte_depart", insertable = true, updatable = false, nullable = false)
-    private ModelCompte compte_depart;
+    private ModelCompte compteDepart;
 
     @Valid
     @ManyToOne
     @JoinColumn(name = "compte_destination", insertable = true, updatable = false, nullable = false)
-    private ModelCompte compte_destination;
+    private ModelCompte compteDestination;
 
     @Valid
     @ManyToOne
@@ -51,12 +51,12 @@ public class ModelTransaction implements Serializable {
 
     public ModelTransaction(){}
 
-    public ModelTransaction(ModelUser user, String libelle, BigDecimal montant, ModelCompte compte_depart, ModelCompte compte_destination, ModelClassification classification, Timestamp date){
+    public ModelTransaction(ModelUser user, String libelle, BigDecimal montant, ModelCompte compteDepart, ModelCompte compteDestination, ModelClassification classification, Timestamp date){
         this.owner = user;
         this.libelle = libelle;
         this.montant = montant;
-        this.compte_depart = compte_depart;
-        this.compte_destination = compte_destination;
+        this.compteDepart = compteDepart;
+        this.compteDestination = compteDestination;
         this.classification = classification;
         this.date = date;
     }
@@ -93,20 +93,20 @@ public class ModelTransaction implements Serializable {
         this.montant = montant;
     }
 
-    public ModelCompte getCompte_depart() {
-        return compte_depart;
+    public ModelCompte getCompteDepart() {
+        return compteDepart;
     }
 
-    public void setCompte_depart(ModelCompte compte_depart) {
-        this.compte_depart = compte_depart;
+    public void setCompteDepart(ModelCompte compte_depart) {
+        this.compteDepart = compte_depart;
     }
 
-    public ModelCompte getCompte_destination() {
-        return compte_destination;
+    public ModelCompte getCompteDestination() {
+        return compteDestination;
     }
 
-    public void setCompte_destination(ModelCompte compte_destination) {
-        this.compte_destination = compte_destination;
+    public void setCompteDestination(ModelCompte compte_destination) {
+        this.compteDestination = compte_destination;
     }
 
     public ModelClassification getClassification(){

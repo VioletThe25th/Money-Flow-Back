@@ -26,12 +26,12 @@ public class ModelTransactionProgrammee implements Serializable {
 
     @Valid
     @ManyToOne
-    @Column(name = "compteDepart", insertable = true, updatable = true, nullable = false)
+    @JoinColumn(name = "compteDepart", insertable = true, updatable = true, nullable = false)
     private ModelCompte compteDepart;
 
     @Valid
     @ManyToOne
-    @Column(name = "compteDestination", insertable = true, updatable = true, nullable = false)
+    @JoinColumn(name = "compteDestination", insertable = true, updatable = true, nullable = false)
     private ModelCompte compteDestination;
 
     @Positive

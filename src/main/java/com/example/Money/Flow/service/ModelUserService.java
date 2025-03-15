@@ -2,6 +2,7 @@ package com.example.Money.Flow.service;
 
 import com.example.Money.Flow.Model.ModelRole;
 import com.example.Money.Flow.Model.ModelUser;
+import com.example.Money.Flow.repository.ModelRoleRepository;
 import com.example.Money.Flow.repository.ModelUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,8 @@ public class ModelUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ModelRoleRepository roleRepository;
     /**
      * Enregistre un nouvel utilisateur
      */
@@ -27,8 +30,22 @@ public class ModelUserService {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException("Email déjà utilisé");
         }
+        // Encodage du mot de passe
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Par défaut, email non confirmé
         user.setEmail_confirme(false);
+
+        // Si aucun rôle n'est défini, on attribue le rôle par défaut "USER"
+        if (user.getRole() == null) {
+            ModelRole defaultRole = roleRepository.findByRole("USER")
+                    .orElseGet(() -> {
+                        // Crée et sauvegarde le rôle "USER" s'il n'existe pas déjà
+                        ModelRole newRole = new ModelRole("USER");
+                        return roleRepository.save(newRole);
+                    });
+            user.setRole(defaultRole);
+        }
+
         return userRepository.save(user);
     }
 

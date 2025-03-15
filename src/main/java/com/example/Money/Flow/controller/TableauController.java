@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -78,7 +79,7 @@ public class TableauController {
      */
     @GetMapping("/owner/{ownerId}")
     public ResponseEntity<ModelTableau> getTableauByOwnerId(@PathVariable Long ownerId) {
-        return tableauService.getTableauByOwnerId(ownerId)
+        return tableauService.getTableauByOwnerId(BigInteger.valueOf(ownerId))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

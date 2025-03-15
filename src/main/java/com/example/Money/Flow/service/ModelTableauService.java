@@ -5,6 +5,7 @@ import com.example.Money.Flow.repository.ModelTableauRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,6 @@ public class ModelTableauService {
      * Créer un tableau
      */
     public ModelTableau createTableau(ModelTableau tableau) {
-        // Si tu veux empêcher la création de plusieurs tableaux pour un même user
         if (tableauRepository.findByOwnerId(tableau.getOwner().getId()).isPresent()) {
             throw new RuntimeException("Cet utilisateur possède déjà un tableau !");
         }
@@ -64,7 +64,7 @@ public class ModelTableauService {
     /**
      * Récupérer un tableau par l'ID de l'owner
      */
-    public Optional<ModelTableau> getTableauByOwnerId(Long ownerId) {
+    public Optional<ModelTableau> getTableauByOwnerId(BigInteger ownerId) {
         return tableauRepository.findByOwnerId(ownerId);
     }
 }

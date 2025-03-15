@@ -39,10 +39,10 @@ public class ModelTransactionService {
      */
     public ModelTransaction createTransaction(ModelTransaction transaction) {
         // Vérifier si le compte départ a assez de solde
-        ModelCompte compteDepart = compteRepository.findById(transaction.getCompte_depart().getId())
+        ModelCompte compteDepart = compteRepository.findById(transaction.getCompteDepart().getId())
                 .orElseThrow(() -> new RuntimeException("Compte départ introuvable"));
 
-        ModelCompte compteDestination = compteRepository.findById(transaction.getCompte_destination().getId())
+        ModelCompte compteDestination = compteRepository.findById(transaction.getCompteDestination().getId())
                 .orElseThrow(() -> new RuntimeException("Compte destination introuvable"));
 
         BigDecimal montant = transaction.getMontant();
@@ -73,8 +73,8 @@ public class ModelTransactionService {
                 .map(transaction -> {
                     transaction.setLibelle(updatedTransaction.getLibelle());
                     transaction.setMontant(updatedTransaction.getMontant());
-                    transaction.setCompte_depart(updatedTransaction.getCompte_depart());
-                    transaction.setCompte_destination(updatedTransaction.getCompte_destination());
+                    transaction.setCompteDepart(updatedTransaction.getCompteDepart());
+                    transaction.setCompteDestination(updatedTransaction.getCompteDestination());
                     transaction.setClassification(updatedTransaction.getClassification());
                     transaction.setDate(updatedTransaction.getDate());
                     return transactionRepository.save(transaction);
